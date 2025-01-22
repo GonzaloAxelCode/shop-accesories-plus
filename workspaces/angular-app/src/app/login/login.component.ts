@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
 	authState$: Observable<AuthState> = this.store.pipe(select(selectAuth));
 	isAuthSuccess: boolean = false;
-	errorDetail: string | undefined;
+	errors: any;
 	readonly passwordFormControl = new FormControl('', Validators.required);
 	readonly usernameFormControl = new FormControl('', [
 		Validators.required,
@@ -48,15 +48,16 @@ export class LoginComponent implements OnInit {
 	ngOnInit(): void {
 		this.authState$.subscribe((authState) => {
 			if (authState.errors) {
-				this.errorDetail = authState.errors?.detail || '';
+				this.errors = authState.errors;
+				console.log(this.errors)
 			}
 		});
 	}
 
 	onSubmit(): void {
-		console.log("HOLA")
-		if (this.loginForm.valid) {
 
+		if (this.loginForm.valid) {
+			console.log("HOLA")
 			const formData: any = this.loginForm.value;
 
 			this.store.dispatch(loginInAction(formData));

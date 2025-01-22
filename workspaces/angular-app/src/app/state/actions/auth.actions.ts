@@ -1,4 +1,4 @@
-import { AuthState, LoginType } from '@/app/models/auth.models';
+import { AuthState } from '@/app/models/auth.models';
 import { createAction, props } from '@ngrx/store';
 
 export enum ActionTypes {
@@ -13,7 +13,7 @@ export enum ActionTypes {
 
 export const loginInAction = createAction(
     ActionTypes.LOGIN_IN_ACTION,
-    props<LoginType>()
+    props<{ username: string, password: string }>()
 );
 
 export const loginInActionSuccess = createAction(

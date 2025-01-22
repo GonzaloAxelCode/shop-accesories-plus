@@ -19,8 +19,8 @@ export const loginEffect = createEffect(
     (actions$ = inject(Actions), authService = inject(AuthService), _store = inject(Store<AppState>)) => {
         return actions$.pipe(
             ofType(loginInAction),
-            exhaustMap(({ email, password }) =>
-                authService.fetchCreateToken({ email, password }).pipe(
+            exhaustMap(({ username, password }) =>
+                authService.fetchCreateToken({ username, password }).pipe(
                     map((response: any) => {
                         if (response.isSuccess) {
                             saveTokensToLocalStorage({
@@ -36,6 +36,7 @@ export const loginEffect = createEffect(
                                 isLoadingLogout: false,
                             });
                         } else {
+
                             return loginInActionFail({
                                 refreshToken: '',
                                 accessToken: '',

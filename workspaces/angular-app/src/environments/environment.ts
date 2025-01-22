@@ -1,6 +1,6 @@
 export const environment = {
 	production: true,
-	URL_BASE: 'https://samuback-qdb1.onrender.com',
-	URL_BASE_FRONT: 'https://samusystem.vercel.app',
+	URL_BASE: 'http://localhost:8000',
+	URL_BASE_FRONT: 'http://localhost:4200',
 	API_VERSION: '1.0',
 };
