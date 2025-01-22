@@ -1,5 +1,14 @@
 {
 	"rules": {
-		"unicorn/empty-brace-spaces": "off"
+		"unicorn/empty-brace-spaces": "off",
+		"@typescript-eslint/no-explicit-any": "off"
+	},
+	"settings": {
+		"import/resolver": {
+			"alias": {
+				"map": [["@", "./src"]],
+				"extensions": [".js", ".jsx", ".ts", ".tsx"]
+			}
+		}
 	}
 }
