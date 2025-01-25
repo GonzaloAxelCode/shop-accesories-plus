@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -14,12 +15,14 @@ import { AuthState } from '../models/auth.models';
 import { loginInAction } from '../state/actions/auth.actions';
 import { selectAuth } from '../state/selectors/auth.selectors';
 
+
+
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.scss'],
 	standalone: true,
-	imports: [ReactiveFormsModule],
+	imports: [ReactiveFormsModule, CommonModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
@@ -30,10 +33,10 @@ export class LoginComponent implements OnInit {
 	private store = inject(Store<any>);
 	private router = inject(Router);
 
-
 	authState$: Observable<AuthState> = this.store.pipe(select(selectAuth));
 	isAuthSuccess: boolean = false;
 	errors: any;
+	isLoading: boolean = false
 	readonly passwordFormControl = new FormControl('', Validators.required);
 	readonly usernameFormControl = new FormControl('', [
 		Validators.required,
@@ -57,16 +60,18 @@ export class LoginComponent implements OnInit {
 	onSubmit(): void {
 
 		if (this.loginForm.valid) {
-			console.log("HOLA")
+
 			const formData: any = this.loginForm.value;
 
 			this.store.dispatch(loginInAction(formData));
 
 			this.authState$.subscribe((authState) => {
-				this.isAuthSuccess = authState.isAuthenticated || false;
-				if (this.isAuthSuccess) {
-					this.router.navigate(['/home']);
+				if (authState.isAuthenticated) {
+					console.log(authState.isAuthenticated)
+					this.isLoading = authState.isLoadingLogin
+
 				}
+
 			});
 		}
 	}

@@ -1,9 +1,11 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
+
+import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -18,6 +20,7 @@ import { checkTokenEffect, loginEffect } from './state/effects/auth.effects';
 		AppRoutingModule,
 		HttpClientModule,
 		LoginComponent,
+		CommonModule,
 		StoreModule.forRoot(ROOT_REDUCER),
 		EffectsModule.forRoot({ loginEffect, checkTokenEffect }),
 		TranslateModule.forRoot({
@@ -26,8 +29,7 @@ import { checkTokenEffect, loginEffect } from './state/effects/auth.effects';
 		}),
 	],
 
-	providers: [AuthService],
-
+	providers: [AuthService, provideHttpClient()],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }
