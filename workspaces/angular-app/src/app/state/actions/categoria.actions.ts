@@ -1,4 +1,4 @@
-import { Categoria, CategoriaCreate } from '@/app/models/categoria.models';
+import { Categoria, CategoriaCreate, CategoriaUpdate } from '@/app/models/categoria.models';
 import { createAction, props } from '@ngrx/store';
 
 export enum CategoriaActionTypes {
@@ -39,9 +39,9 @@ export const createCategoriaFail = createAction(
     props<{ error: any }>()
 );
 
-export const updateCategoria = createAction(
+export const updateCategoriaAction = createAction(
     CategoriaActionTypes.UPDATE_CATEGORIA,
-    props<{ categoria: Categoria }>()
+    props<{ categoria: CategoriaUpdate }>()
 );
 export const updateCategoriaSuccess = createAction(
     CategoriaActionTypes.UPDATE_CATEGORIA_SUCCESS,
@@ -52,13 +52,13 @@ export const updateCategoriaFail = createAction(
     props<{ error: any }>()
 );
 
-export const deleteCategoria = createAction(
+export const deleteCategoriaAction = createAction(
     CategoriaActionTypes.DELETE_CATEGORIA,
     props<{ id: number }>()
 );
 export const deleteCategoriaSuccess = createAction(
     CategoriaActionTypes.DELETE_CATEGORIA_SUCCESS,
-    props<{ id: number }>()
+    props<any>()
 );
 export const deleteCategoriaFail = createAction(
     CategoriaActionTypes.DELETE_CATEGORIA_FAIL,

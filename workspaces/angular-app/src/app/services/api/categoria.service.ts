@@ -1,4 +1,4 @@
-import { Categoria, CategoriaCreate } from '@/app/models/categoria.models';
+import { Categoria, CategoriaCreate, CategoriaUpdate } from '@/app/models/categoria.models';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
@@ -22,19 +22,28 @@ export class CategoriaService {
 
   createCategoria(categoria: CategoriaCreate): Observable<Categoria> {
     return this.http.post<Categoria>(`${this.siteURL}/categorias/create/`, categoria).pipe(
-      catchError(error => throwError(error))
+      catchError(error => {
+        console.log(error)
+        return throwError(error)
+      })
     );
   }
 
-  updateCategoria(categoria: Categoria): Observable<Categoria> {
-    return this.http.put<Categoria>(`${this.siteURL}/categorias/${categoria.id}`, categoria).pipe(
-      catchError(error => throwError(error))
+  updateCategoria(categoria: CategoriaUpdate): Observable<Categoria> {
+    return this.http.put<Categoria>(`${this.siteURL}/categorias/update/${categoria.id}/`, categoria).pipe(
+      catchError(error => {
+        console.log(error)
+        return throwError(error)
+      })
     );
   }
 
   deleteCategoria(id: number): Observable<any> {
-    return this.http.delete(`${this.siteURL}/categorias/${id}`).pipe(
-      catchError(error => throwError(error))
+    return this.http.delete(`${this.siteURL}/categorias/delete/${id}/`).pipe(
+      catchError(error => {
+        console.log(error)
+        return throwError(error)
+      })
     );
   }
 }
