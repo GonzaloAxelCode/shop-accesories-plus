@@ -8,7 +8,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
+
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { LoginComponent } from './pages/login/login.component';
 import { AuthService } from './services/api/auth.service';
 import { ROOT_REDUCER } from './state/app.state';
 import { checkTokenEffect, loginEffect } from './state/effects/auth.effects';
@@ -20,6 +22,7 @@ import { checkTokenEffect, loginEffect } from './state/effects/auth.effects';
 		AppRoutingModule,
 		HttpClientModule,
 		LoginComponent,
+
 		CommonModule,
 		StoreModule.forRoot(ROOT_REDUCER),
 		EffectsModule.forRoot({ loginEffect, checkTokenEffect }),
@@ -29,7 +32,7 @@ import { checkTokenEffect, loginEffect } from './state/effects/auth.effects';
 		}),
 	],
 
-	providers: [AuthService, provideHttpClient()],
+	providers: [AuthService, provideHttpClient(), provideAnimationsAsync()],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }

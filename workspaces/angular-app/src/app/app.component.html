@@ -1,1 +1,12 @@
-<router-outlet></router-outlet>
+<div *ngIf="loadingAuthenticated$ | async; else content">
+	<div class="loading-overlay content-body-loader">
+		<div class="wrapper">
+			<div class="dot"></div>
+			<span class="text"> Loading </span>
+		</div>
+	</div>
+</div>
+
+<ng-template #content>
+	<router-outlet></router-outlet>
+</ng-template>

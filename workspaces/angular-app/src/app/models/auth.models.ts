@@ -7,7 +7,7 @@ export interface AuthState {
     isAuthenticated?: boolean;
     accessToken?: string;
     refreshToken?: string;
-
+    loadingCheckAuthenticated?: boolean
 }
 
 export interface AuthErrors {
@@ -33,13 +33,7 @@ export interface TokenPair {
     refreshToken?: string;
 }
 
-export interface ServiceFetchResponse {
-    networkError: boolean;
-    errors: any;
-    data: any;
-    isSuccess: boolean;
-    HTTPstatus: number;
-}
+
 
 export interface LoginType {
     email?: string;

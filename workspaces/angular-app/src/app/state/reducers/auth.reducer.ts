@@ -5,6 +5,9 @@ import { createReducer, on } from '@ngrx/store';
 import { AuthState } from '@/app/models/auth.models';
 import { clearTokensLocalstorage, getTokensFromLocalStorage } from '@/app/services/localstorage/notification.service';
 import {
+  checkTokenAction,
+  checkTokenActionFail,
+  checkTokenActionSuccess,
   clearTokensAction,
   loginInAction,
   loginInActionFail,
@@ -19,7 +22,8 @@ export const initialState: AuthState = {
   accessToken: accessToken || '',
   refreshToken: refreshToken || '',
   isLoadingLogin: false,
-  isLoadingLogout: false
+  isLoadingLogout: false,
+  loadingCheckAuthenticated: false
 };
 
 export const authReducer = createReducer(
@@ -28,6 +32,11 @@ export const authReducer = createReducer(
     ...state,
     ...payload,
     isLoadingLogin: true,
+  })),
+  on(loginInAction, (state, payload) => ({
+    ...state,
+    ...payload,
+
   })),
   on(loginInActionSuccess, (state, payload) => ({
     ...state,
@@ -40,6 +49,25 @@ export const authReducer = createReducer(
     ...payload,
     isLoadingLogin: false,
   })),
+  on(checkTokenAction, (state, payload) => ({
+    ...state,
+    ...payload,
+    loadingCheckAuthenticated: true
+  })),
+  on(checkTokenActionSuccess, (state, payload) => ({
+    ...state,
+    ...payload,
+    isAuthenticated: true,
+    loadingCheckAuthenticated: false
+  })),
+  on(checkTokenActionFail, (state, payload) => ({
+    ...state,
+    ...payload,
+    isAuthenticated: false,
+    loadingCheckAuthenticated: false
+  })),
+
+
   on(clearTokensAction, (state, payload) => {
     clearTokensLocalstorage();
     return {
@@ -52,3 +80,4 @@ export const authReducer = createReducer(
     };
   })
 );
+

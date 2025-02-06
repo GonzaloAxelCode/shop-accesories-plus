@@ -6,17 +6,17 @@ import { filter, map, tap } from 'rxjs/operators';
 import { AppState } from '../state/app.state';
 import { selectAuth } from '../state/selectors/auth.selectors';
 
-export const authGuard = (): Observable<boolean> => {
+export const loginGuard = (): Observable<boolean> => {
     const store = inject(Store<AppState>);
     const router = inject(Router);
 
     return store.select(selectAuth).pipe(
-        // Filtramos para asegurarnos de que no tomamos el estado hasta que loading sea false
+
         filter(authState => !authState.loadingCheckAuthenticated),
-        map((authState: any) => authState.isAuthenticated),
-        tap(isAuthenticated => {
-            if (!isAuthenticated) {
-                router.navigate(['/login']);
+        map(authState => !authState.isAuthenticated),
+        tap(canAccessLogin => {
+            if (!canAccessLogin) {
+                router.navigate(['/']);
             }
         })
     );

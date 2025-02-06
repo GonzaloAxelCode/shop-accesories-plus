@@ -8,12 +8,13 @@ import {
 	Output,
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { AuthState } from '../models/auth.models';
-import { loginInAction } from '../state/actions/auth.actions';
-import { selectAuth } from '../state/selectors/auth.selectors';
+import { map } from 'rxjs';
+import { loginInAction } from '../../state/actions/auth.actions';
+import { selectAuth } from '../../state/selectors/auth.selectors';
 
 
 
@@ -22,7 +23,7 @@ import { selectAuth } from '../state/selectors/auth.selectors';
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.scss'],
 	standalone: true,
-	imports: [ReactiveFormsModule, CommonModule],
+	imports: [ReactiveFormsModule, CommonModule, MatButtonModule, MatIconModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
@@ -33,10 +34,14 @@ export class LoginComponent implements OnInit {
 	private store = inject(Store<any>);
 	private router = inject(Router);
 
-	authState$: Observable<AuthState> = this.store.pipe(select(selectAuth));
+
+	authState$ = this.store.pipe(select(selectAuth));
+
 	isAuthSuccess: boolean = false;
 	errors: any;
-	isLoading: boolean = false
+
+	isLoading$ = this.authState$.pipe(map(authState => authState.isLoadingLogin));
+
 	readonly passwordFormControl = new FormControl('', Validators.required);
 	readonly usernameFormControl = new FormControl('', [
 		Validators.required,
@@ -49,12 +54,7 @@ export class LoginComponent implements OnInit {
 	});
 
 	ngOnInit(): void {
-		this.authState$.subscribe((authState) => {
-			if (authState.errors) {
-				this.errors = authState.errors;
-				console.log(this.errors)
-			}
-		});
+
 	}
 
 	onSubmit(): void {
@@ -68,8 +68,7 @@ export class LoginComponent implements OnInit {
 			this.authState$.subscribe((authState) => {
 				if (authState.isAuthenticated) {
 					console.log(authState.isAuthenticated)
-					this.isLoading = authState.isLoadingLogin
-
+					this.router.navigate(['/']);
 				}
 
 			});
