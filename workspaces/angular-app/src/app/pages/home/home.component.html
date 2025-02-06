@@ -1,46 +1,11 @@
-<p>home works!</p>
+
 <div>
-	<h1>Bienvenido a la aplicación:home</h1>
-	<!-- userstable.component.html -->
-	<div class="form-container">
-		<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-			<mat-form-field appearance="fill" class="full-width">
-				<mat-label>Nombre</mat-label>
-				<input
-					matInput
-					formControlName="nombre"
-					placeholder="Ingrese el nombre de la categoría"
-				/>
-				<mat-error *ngIf="categoryForm.get('nombre')?.hasError('required')"
-					>Este campo es obligatorio</mat-error
-				>
-			</mat-form-field>
-
-			<mat-form-field appearance="fill" class="full-width">
-				<mat-label>Descripción</mat-label>
-				<input
-					matInput
-					formControlName="descripcion"
-					placeholder="Ingrese la descripción de la categoría"
-				/>
-				<mat-error *ngIf="categoryForm.get('descripcion')?.hasError('required')"
-					>Este campo es obligatorio</mat-error
-				>
-			</mat-form-field>
-
-		
-			<div class="button-container">
-				<button
-					mat-raised-button
-					color="primary"
-					[disabled]="categoryForm.invalid"
-					type="submit"
-				>
-					Crear Categoría
-				</button>
-			</div>
-		</form>
-	</div>
+	
+	<app-formaddcategoria></app-formaddcategoria>
 	<app-tablecategories></app-tablecategories>
+		<app-formaddtienda></app-formaddtienda>
+	<app-tabletiendas></app-tabletiendas>
+		<app-fromadduser></app-fromadduser>
+	<app-tableusers></app-tableusers>
 </div>
 

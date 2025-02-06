@@ -1,3 +1,4 @@
+import { clearTokensAction } from '@/app/state/actions/auth.actions';
 import { AppState } from '@/app/state/app.state';
 import { selectAuth } from '@/app/state/selectors/auth.selectors';
 import { CommonModule } from '@angular/common';
@@ -10,7 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { map, Observable } from 'rxjs';
@@ -30,7 +31,7 @@ import { map, Observable } from 'rxjs';
   styleUrl: './sidenav.component.scss'
 })
 export class SidenavComponent {
-  constructor(private store: Store<AppState>, private toastr: ToastrService) {
+  constructor(private store: Store<AppState>, private toastr: ToastrService, private router: Router) {
 
     this.isAuthenticated$ = this.store.select(selectAuth).pipe(
       map(authState => authState.isAuthenticated)
@@ -43,4 +44,9 @@ export class SidenavComponent {
   isAuthenticated$: Observable<any>;
   loadingAuthenticated$: Observable<any>;
   authState$ = this.store.pipe(select(selectAuth));
+
+  logout() {
+    this.store.dispatch(clearTokensAction())
+    this.router.navigate(['/login']);
+  }
 }

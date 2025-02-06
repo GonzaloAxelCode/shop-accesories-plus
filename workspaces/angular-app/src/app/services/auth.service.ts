@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { URL_BASE } from './endpoints';
-import { getTokensFromLocalStorage } from './localstorage-functions';
+import { URL_BASE } from './utils/endpoints';
+import { getTokensFromLocalStorage } from './utils/localstorage-functions';
 
 @Injectable({
   providedIn: 'root',

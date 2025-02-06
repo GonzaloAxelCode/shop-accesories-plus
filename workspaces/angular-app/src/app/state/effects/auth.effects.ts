@@ -1,5 +1,5 @@
-import { AuthService } from '@/app/services/api/auth.service';
-import { saveTokensToLocalStorage } from '@/app/services/api/localstorage-functions';
+import { AuthService } from '@/app/services/auth.service';
+import { saveTokensToLocalStorage } from '@/app/services/utils/localstorage-functions';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of } from 'rxjs';

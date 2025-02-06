@@ -3,7 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 
 
 import { AuthState } from '@/app/models/auth.models';
-import { clearTokensLocalstorage, getTokensFromLocalStorage } from '@/app/services/api/localstorage-functions';
+import { clearTokensLocalstorage, getTokensFromLocalStorage } from '@/app/services/utils/localstorage-functions';
 import {
   checkTokenAction,
   checkTokenActionFail,

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, exhaustMap, map, of } from 'rxjs';
 
-import { CategoriaService } from '@/app/services/api/categoria.service';
+import { CategoriaService } from '@/app/services/categoria.service';
 import {
     createCategoriaAction, createCategoriaFail, createCategoriaSuccess,
     deleteCategoriaAction, deleteCategoriaFail, deleteCategoriaSuccess,

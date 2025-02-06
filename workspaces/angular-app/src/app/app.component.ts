@@ -18,9 +18,8 @@ export class AppComponent {
   }
 
 
-
-
   ngOnInit() {
     this.store.dispatch(checkTokenAction());
+
   }
 }

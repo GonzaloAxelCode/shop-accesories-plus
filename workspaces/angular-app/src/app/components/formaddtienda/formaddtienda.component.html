@@ -1,0 +1,62 @@
+<div class="form-container">
+  <form [formGroup]="tiendaForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input
+        matInput
+        formControlName="nombre"
+        placeholder="Ingrese el nombre de la tienda"
+      />
+      <mat-error *ngIf="tiendaForm.get('nombre')?.hasError('required')">
+        Este campo es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Dirección</mat-label>
+      <input
+        matInput
+        formControlName="direccion"
+        placeholder="Ingrese la dirección de la tienda"
+      />
+      <mat-error *ngIf="tiendaForm.get('direccion')?.hasError('required')">
+        Este campo es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Teléfono</mat-label>
+      <input
+        matInput
+        formControlName="telefono"
+        placeholder="Ingrese el teléfono de la tienda"
+      />
+      <mat-error *ngIf="tiendaForm.get('telefono')?.hasError('required')">
+        Este campo es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>RUC</mat-label>
+      <input
+        matInput
+        formControlName="ruc"
+        placeholder="Ingrese el RUC de la tienda"
+      />
+      <mat-error *ngIf="tiendaForm.get('ruc')?.hasError('required')">
+        Este campo es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <div class="button-container">
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="tiendaForm.invalid"
+        type="submit"
+      >
+        Crear Tienda
+      </button>
+    </div>
+  </form>
+</div>
