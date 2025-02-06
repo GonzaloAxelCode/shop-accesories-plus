@@ -1,10 +1,8 @@
-import { inject } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
-import { catchError, exhaustMap, map, of } from 'rxjs';
-
 import { AuthService } from '@/app/services/api/auth.service';
-import { saveTokensToLocalStorage } from '@/app/services/localstorage/notification.service';
+import { saveTokensToLocalStorage } from '@/app/services/api/localstorage-functions';
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, exhaustMap, map, of } from 'rxjs';
 import {
     checkTokenAction,
     checkTokenActionFail,
@@ -13,39 +11,31 @@ import {
     loginInActionFail,
     loginInActionSuccess
 } from '../actions/auth.actions';
-import { AppState } from '../app.state';
 
-export const loginEffect = createEffect(
-    (actions$ = inject(Actions), authService = inject(AuthService), _store = inject(Store<AppState>)) => {
-        return actions$.pipe(
+@Injectable()
+export class AuthEffects {
+
+    constructor(private actions$: Actions, private authService: AuthService) { }
+
+    // eslint-disable-next-line unicorn/consistent-function-scoping
+    loginEffect = createEffect(() =>
+        this.actions$.pipe(
             ofType(loginInAction),
             exhaustMap(({ username, password }) =>
-                authService.fetchCreateToken({ username, password }).pipe(
+                this.authService.fetchCreateToken({ username, password }).pipe(
                     map((response: any) => {
-                        if (response.isSuccess) {
-                            saveTokensToLocalStorage({
-                                accessToken: response.data?.access,
-                                refreshToken: response.data?.refresh,
-                            });
+                        saveTokensToLocalStorage({
+                            accessToken: response?.access,
+                            refreshToken: response?.refresh,
+                        });
 
-                            return loginInActionSuccess({
-                                refreshToken: response.data?.refresh,
-                                accessToken: response.data?.access,
-                                isAuthenticated: true,
-                                isLoadingLogin: false,
-                                isLoadingLogout: false,
-                            });
-                        } else {
-
-                            return loginInActionFail({
-                                refreshToken: '',
-                                accessToken: '',
-                                isAuthenticated: false,
-                                errors: response?.error?.detail?.error,
-                                isLoadingLogin: false,
-                                isLoadingLogout: false,
-                            });
-                        }
+                        return loginInActionSuccess({
+                            refreshToken: response?.refresh,
+                            accessToken: response?.access,
+                            isAuthenticated: true,
+                            isLoadingLogin: false,
+                            isLoadingLogout: false,
+                        });
                     }),
                     catchError((error) =>
                         of(
@@ -61,26 +51,21 @@ export const loginEffect = createEffect(
                     )
                 )
             )
-        );
-    },
-    { functional: true }
-);
+        )
+    );
 
-export const checkTokenEffect = createEffect(
-    (actions$ = inject(Actions), authService = inject(AuthService), _store = inject(Store<AppState>)) => {
-        return actions$.pipe(
+    // eslint-disable-next-line unicorn/consistent-function-scoping
+    checkTokenEffect = createEffect(() =>
+        this.actions$.pipe(
             ofType(checkTokenAction),
             exhaustMap(() =>
-                authService.fetchCheckAuthenticated().pipe(
+                this.authService.fetchCheckAuthenticated().pipe(
                     map((response: any) =>
-                        response.isSuccess ? checkTokenActionSuccess() : checkTokenActionFail()
+                        response ? checkTokenActionSuccess() : checkTokenActionFail()
                     ),
-                    catchError(() =>
-                        of(checkTokenActionFail())
-                    )
+                    catchError(() => of(checkTokenActionFail()))
                 )
             )
-        );
-    },
-    { functional: true }
-);
+        )
+    );
+}

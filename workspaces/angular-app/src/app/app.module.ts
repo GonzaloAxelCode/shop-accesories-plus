@@ -1,4 +1,4 @@
-import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { EffectsModule } from '@ngrx/effects';
@@ -12,8 +12,12 @@ import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthService } from './services/api/auth.service';
+import { CategoriaService } from './services/api/categoria.service';
+import { AuthInterceptor } from './services/api/http-auth-interceptor';
 import { ROOT_REDUCER } from './state/app.state';
-import { checkTokenEffect, loginEffect } from './state/effects/auth.effects';
+import { AuthEffects } from './state/effects/auth.effects';
+import { CategoriaEffects } from './state/effects/categoria.effect';
+
 
 @NgModule({
 	declarations: [AppComponent],
@@ -25,14 +29,19 @@ import { checkTokenEffect, loginEffect } from './state/effects/auth.effects';
 
 		CommonModule,
 		StoreModule.forRoot(ROOT_REDUCER),
-		EffectsModule.forRoot({ loginEffect, checkTokenEffect }),
+		EffectsModule.forRoot([AuthEffects, CategoriaEffects]),
 		TranslateModule.forRoot({
 			defaultLanguage: 'en',
 
 		}),
 	],
 
-	providers: [AuthService, provideHttpClient(), provideAnimationsAsync()],
+	providers: [
+		AuthService,
+		CategoriaService,
+		provideAnimationsAsync(),
+		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+	],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }
