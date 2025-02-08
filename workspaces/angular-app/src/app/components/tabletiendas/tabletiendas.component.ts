@@ -19,7 +19,7 @@ import { Store } from '@ngrx/store';
 export class TabletiendasComponent implements OnInit {
 
 
-  displayedColumns = ['nombre', 'direccion', 'ciudad', 'telefono', 'capacidad', 'ruc', 'activo', 'acciones'];
+  displayedColumns = ['id', 'nombre', 'direccion', 'ciudad', 'telefono', 'capacidad', 'ruc', 'activo', 'acciones'];
 
   dataSource = new MatTableDataSource<Tienda>([]);
   editingId: number | any = null;

@@ -1,14 +1,32 @@
 export interface Producto {
-    nombre: string;
+    id: number,
+    nombre?: string;
     descripcion?: string | null;
-    precio: number;
-    categoriaId?: number | null;
-    sku: string;
+    precio?: number | any;
+    categoria?: number | null;
+    sku?: string;
     marca?: string | null;
     modelo?: string | null;
-    caracteristicas: Record<string, any>;
-    fechaCreacion: Date;
-    fechaActualizacion: Date;
-    activo: boolean;
+    caracteristica?: Record<string, any>;
+    fechaCreacion?: Date;
+    fechaActualizacion?: Date;
+    activo?: boolean;
     proveedorId?: number | null;
 }
+
+export type ProductoCreate = Omit<Producto, 'id' |
+    'fechaCreacion' |
+    'fechaActualizacion' |
+    'activo' |
+    'imagen' |
+    'proveedorId'>;
+
+
+
+export interface ProductoState {
+    productos: Producto[];
+    loadingProductos?: boolean;
+    errors?: any;
+}
+
+

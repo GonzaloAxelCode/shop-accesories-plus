@@ -1,13 +1,24 @@
 export interface Inventario {
-    productoId: number;
-    tiendaId: number;
+    id: number
+    producto: number;
+    tienda: number;
     cantidad: number;
-    stockMinimo: number;
-    stockMaximo: number;
-    fechaActualizacion: Date;
+    stock_minimo: number;
+    stock_maximo: number;
+    costo: number;
+    fecha_actualizacion: Date;
     activo: boolean;
     lote: string;
-    fechaVencimiento?: Date | null;
-    costo: number;
+    fecha_vencimiento?: Date | null;
     estado: string;
+    proveedor: number | any
+    responsable: number | any
+    descripcion: string
 }
+
+export type InventarioCreate = Omit<Inventario, 'id' |
+    'fecha_actualizacion' |
+    'activo' |
+    'estado' |
+    'lote'>;
+

@@ -1,0 +1,79 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!-- ID Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+  </ng-container>
+
+  <!-- Nombre Column -->
+  <ng-container matColumnDef="nombre">
+    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="editingId === element.id; else viewNombre">
+        <input matInput [(ngModel)]="editedProveedor.nombre" class="editable-input">
+      </ng-container>
+      <ng-template #viewNombre>{{ element.nombre }}</ng-template>
+    </td>
+  </ng-container>
+
+  <!-- Dirección Column -->
+  <ng-container matColumnDef="direccion">
+    <th mat-header-cell *matHeaderCellDef> Dirección </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="editingId === element.id; else viewDireccion">
+        <input matInput [(ngModel)]="editedProveedor.direccion" class="editable-input">
+      </ng-container>
+      <ng-template #viewDireccion>{{ element.direccion }}</ng-template>
+    </td>
+  </ng-container>
+
+  <!-- Teléfono Column -->
+  <ng-container matColumnDef="telefono">
+    <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="editingId === element.id; else viewTelefono">
+        <input matInput [(ngModel)]="editedProveedor.telefono" class="editable-input">
+      </ng-container>
+      <ng-template #viewTelefono>{{ element.telefono }}</ng-template>
+    </td>
+  </ng-container>
+
+  <!-- Tipo de Producto Column -->
+  <ng-container matColumnDef="tipo_producto">
+    <th mat-header-cell *matHeaderCellDef> Tipo de Producto </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="editingId === element.id; else viewTipoProducto">
+        <input matInput [(ngModel)]="editedProveedor.tipo_producto" class="editable-input">
+      </ng-container>
+      <ng-template #viewTipoProducto>{{ element.tipo_producto }}</ng-template>
+    </td>
+  </ng-container>
+
+  <!-- Acciones Column -->
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="editingId === element.id; else viewActions">
+        <button mat-icon-button color="primary" (click)="onUpdateProveedor()">
+          <mat-icon>check</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="onCancelEdit()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </ng-container>
+      <ng-template #viewActions>  
+        <button mat-icon-button color="accent" (click)="onEditProveedor(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="onDeleteProveedor(element.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>

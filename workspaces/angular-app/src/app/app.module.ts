@@ -24,8 +24,14 @@ import { provideToastr, ToastrModule } from 'ngx-toastr';
 
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { SidenavComponent } from "./components/sidenav/sidenav.component";
+import { InventarioService } from './services/inventario.service';
+import { ProductoService } from './services/producto.service';
+import { ProveedorService } from './services/proveedor.service';
 import { TiendaService } from './services/tienda.service';
 import { UserService } from './services/user.service';
+import { InventarioEffects } from './state/effects/inventario.effects';
+import { ProductoEffects } from './state/effects/producto.effects';
+import { ProveedorEffects } from './state/effects/proveedor.effects';
 import { TiendaEffects } from './state/effects/tienda.effects';
 import { UserEffects } from './state/effects/user.effects';
 
@@ -40,7 +46,15 @@ import { UserEffects } from './state/effects/user.effects';
 		LoginComponent,
 		CommonModule,
 		StoreModule.forRoot(ROOT_REDUCER),
-		EffectsModule.forRoot([AuthEffects, CategoriaEffects, TiendaEffects, UserEffects]),
+		EffectsModule.forRoot([
+			AuthEffects,
+			CategoriaEffects,
+			TiendaEffects,
+			UserEffects,
+			ProductoEffects,
+			InventarioEffects,
+			ProveedorEffects
+		]),
 		TranslateModule.forRoot({
 			defaultLanguage: 'en',
 		}),
@@ -51,6 +65,9 @@ import { UserEffects } from './state/effects/user.effects';
 		CategoriaService,
 		TiendaService,
 		UserService,
+		ProductoService,
+		InventarioService,
+		ProveedorService,
 		provideAnimations(),
 		provideToastr(),
 		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

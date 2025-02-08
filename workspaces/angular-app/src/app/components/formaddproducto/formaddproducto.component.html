@@ -1,0 +1,68 @@
+<div class="form-container">
+  <form [formGroup]="productoForm" (ngSubmit)="onSubmit()">
+    <!-- Nombre -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Nombre del Producto</mat-label>
+      <input matInput formControlName="nombre" placeholder="Ingrese el nombre del producto" />
+      <mat-error *ngIf="productoForm.get('nombre')?.hasError('required')">
+        Este campo es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Descripción -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="descripcion" placeholder="Ingrese la descripción"></textarea>
+    </mat-form-field>
+
+    <!-- Precio -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Precio</mat-label>
+      <input matInput type="number" formControlName="precio" placeholder="Ingrese el precio" />
+      <mat-error *ngIf="productoForm.get('precio')?.hasError('required')">
+        Este campo es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <!-- SKU -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>SKU</mat-label>
+      <input matInput formControlName="sku" placeholder="Ingrese el SKU del producto" />
+      <mat-error *ngIf="productoForm.get('sku')?.hasError('required')">
+        Este campo es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Marca -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Marca</mat-label>
+      <input matInput formControlName="marca" placeholder="Ingrese la marca del producto" />
+    </mat-form-field>
+
+    <!-- Modelo -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Modelo</mat-label>
+      <input matInput formControlName="modelo" placeholder="Ingrese el modelo del producto" />
+    </mat-form-field>
+
+    <!-- Categoría (Dropdown) -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Categoría</mat-label>
+      <mat-select formControlName="categoria">
+        <mat-option *ngFor="let categoria of categorias$ | async" [value]="categoria.id">
+          {{ categoria.nombre }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="productoForm.get('categoria')?.hasError('required')">
+        Este campo es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Botón de envío -->
+    <div class="button-container">
+      <button mat-raised-button color="primary" [disabled]="productoForm.invalid" type="submit">
+        Agregar Producto
+      </button>
+    </div>
+  </form>
+</div>

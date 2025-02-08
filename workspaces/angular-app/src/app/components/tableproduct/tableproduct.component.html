@@ -1,0 +1,78 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- ID Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+  </ng-container>
+
+  <!-- Nombre Column -->
+  <ng-container matColumnDef="nombre">
+    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="editingId === element.id; else viewNombre">
+        <input matInput [(ngModel)]="editedProducto.nombre" class="editable-input">
+      </ng-container>
+      <ng-template #viewNombre>{{ element.nombre }}</ng-template>
+    </td>
+  </ng-container>
+
+  <!-- Descripción Column -->
+  <ng-container matColumnDef="descripcion">
+    <th mat-header-cell *matHeaderCellDef> Descripción </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="editingId === element.id; else viewDescripcion">
+        <input matInput [(ngModel)]="editedProducto.descripcion" class="editable-input">
+      </ng-container>
+      <ng-template #viewDescripcion>{{ element.descripcion }}</ng-template>
+    </td>
+  </ng-container>
+
+  <!-- Precio Column -->
+  <ng-container matColumnDef="precio">
+    <th mat-header-cell *matHeaderCellDef> Precio </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="editingId === element.id; else viewPrecio">
+        <input matInput [(ngModel)]="editedProducto.precio" class="editable-input" type="number">
+      </ng-container>
+      <ng-template #viewPrecio>{{ element.precio | currency }}</ng-template>
+    </td>
+  </ng-container>
+
+   <ng-container matColumnDef="categoria">
+    <th mat-header-cell *matHeaderCellDef> Categoria </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="editingId === element.id; else viewCategoria">
+        <input matInput [(ngModel)]="editedProducto.categoria" class="editable-input" type="number">
+      </ng-container>
+      <ng-template #viewCategoria>{{ element.categoria }}</ng-template>
+    </td>a
+  </ng-container>
+
+
+
+  <!-- Acciones Column -->
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="editingId === element.id; else viewActions">
+        <button mat-icon-button color="primary" (click)="onUpdateProducto()">
+          <mat-icon>check</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="onCancelEdit()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </ng-container>
+      <ng-template #viewActions>
+        <button mat-icon-button color="accent" (click)="onEditProducto(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="onDeleteProducto(element.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
